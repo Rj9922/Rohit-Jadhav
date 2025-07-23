@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lustria&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lustria&display=swap');
+
 :root {
   --alpha-button-background: 1;
   --alpha-button-border: 1;
@@ -3582,6 +3585,21 @@ details-disclosure > details {
 
 .progress-bar .progress-bar-value {
   display: block;
+}
+
+/* utility classes */
+.d-flex {
+	display: flex;
+}
+.flex-wrap {
+	flex-wrap: wrap;
+}
+.lg-col-3 .flex-item {
+	width: calc(33.33% - 20px * 2 / 3);
+	max-width: calc(33.33% - 20px * 2 / 3);
+}
+.flex-gap {
+	gap: 20px;
 }
 
 @keyframes indeterminateAnimation {

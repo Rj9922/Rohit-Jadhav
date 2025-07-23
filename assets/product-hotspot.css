@@ -1,0 +1,71 @@
+.section-wrapper h2.section-heading {
+	font-size: 32px;
+	line-height: 120%;
+	letter-spacing: 0;
+	margin-top: 0;
+	margin-bottom: 30px;
+}
+
+/* product-card CSS */
+.product-card-image-container {
+	overflow: hidden;
+}
+
+.product-card-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.hotspot-button {
+	position: absolute;
+	outline: none;
+	border: none;
+	width: 23px;
+	height: 23px;
+	background-color: #F8F8F8E5;
+	color: #000;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 16px;
+	cursor: pointer;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	transition: background 0.3s;
+}
+
+.hotspot-button:hover {
+	background-color: #FFF544;
+}
+
+.hotspot-button svg.icon {
+	height: 8px;
+	width: 8px;
+}
+
+/* mobile css */
+@media screen and (max-width: 749px) {
+	.section-wrapper h2.section-heading {
+		font-size: 24px;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+
+	.md-col-2 .flex-item {
+		width: calc(50% - 4px / 2);
+		max-width: calc(50% - 4px / 2);
+	}
+
+	.flex-gap {
+		gap: 4px;
+	}
+
+	.hotspot-button {
+		width: 15px;
+		height: 15px;
+	}
+}
