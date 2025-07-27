@@ -10,17 +10,35 @@ class ProductPopup extends HTMLElement {
     this.price = this.querySelector('#popup-price');
     this.description = this.querySelector('#popup-description');
     this.addToCartBtn = this.querySelector('#popup-add-to-cart');
+    this.errorMessage = this.querySelector('#popup-error-message');
 
     // Close button
     const closeBtn = this.querySelector('.close-popup');
     closeBtn?.addEventListener('click', () => {
       this.popup.classList.remove('show');
+      this.clearError();
     });
 
-    // Add to cart button
+    // Add to Cart button click handler
     this.addToCartBtn?.addEventListener('click', () => {
+      this.clearError();
       const variantId = this.getSelectedVariantId();
-      if (!variantId) return alert('Please select a valid variant.');
+
+      if (!this.selectedColor && !this.selectedSize) {
+        this.showError('Please select a color and size.');
+        return;
+      } else if (!this.selectedColor) {
+        this.showError('Please select a color.');
+        return;
+      } else if (!this.selectedSize) {
+        this.showError('Please select a size.');
+        return;
+      }
+
+      if (!variantId) {
+        this.showError('Selected variant is not available.');
+        return;
+      }
 
       fetch('/cart/add.js', {
         method: 'POST',
@@ -31,6 +49,7 @@ class ProductPopup extends HTMLElement {
         .then(() => {
           alert('Added to cart!');
           this.popup.classList.remove('show');
+          window.location.href = '/cart';
         })
         .catch(() => alert('Failed to add to cart.'));
     });
@@ -48,13 +67,19 @@ class ProductPopup extends HTMLElement {
       this.sizeSelectToggle.querySelector('.size-select-arrow').classList.toggle('rotated');
     });
 
-    // Update selected size text on option click
+    // Update selected size text on option click + visual highlight
     this.sizeOptionsList.addEventListener('click', (event) => {
       if (event.target.classList.contains('size-option')) {
         this.sizeSelectedText.textContent = event.target.textContent;
         this.selectedSize = event.target.textContent;
+
+        this.sizeOptionsList.querySelectorAll('.size-option').forEach(li => li.classList.remove('selected'));
+        event.target.classList.add('selected');
+
         this.sizeOptionsList.classList.remove('open');
         this.sizeSelectToggle.querySelector('.size-select-arrow').classList.remove('rotated');
+
+        this.clearError();
       }
     });
 
@@ -64,6 +89,12 @@ class ProductPopup extends HTMLElement {
         this.sizeOptionsList.classList.remove('open');
         this.sizeSelectToggle.querySelector('.size-select-arrow').classList.remove('rotated');
       }
+    });
+
+    // Color option click handler clears errors
+    const colorContainer = this.querySelector('#color-swatch-container');
+    colorContainer?.addEventListener('click', () => {
+      this.clearError();
     });
   }
 
@@ -82,6 +113,7 @@ class ProductPopup extends HTMLElement {
         this.buildSizeOptions(product.options);
 
         this.popup.classList.add('show');
+        this.clearError();
       })
       .catch(() => alert('Could not load product. Please try again.'));
   }
@@ -89,12 +121,12 @@ class ProductPopup extends HTMLElement {
   getSelectedVariantId() {
     const color = this.selectedColor;
     const size = this.selectedSize;
-    const matched = this.product.variants.find(v => {
-      // Adjust logic depending on option order
-      // Usually option1 = size, option2 = color or vice versa
-      // Here assuming option1 = size, option2 = color
-      return v.option1 === size && v.option2 === color;
-    });
+
+    if (!color || !size) return null;
+
+    // Assumes option1 = size, option2 = color; adjust if needed
+    const matched = this.product.variants.find(v => v.option1 === size && v.option2 === color);
+
     return matched?.id || null;
   }
 
@@ -115,15 +147,11 @@ class ProductPopup extends HTMLElement {
       btn.dataset.color = color;
       btn.style.setProperty('--swatch-color', color.toLowerCase());
 
-      if (index === 0) {
-        btn.classList.add('active');
-        this.selectedColor = color;
-      }
-
       btn.addEventListener('click', () => {
         colorContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.selectedColor = color;
+        this.clearError();
       });
 
       colorContainer.appendChild(btn);
@@ -134,17 +162,43 @@ class ProductPopup extends HTMLElement {
     const sizeOption = options.find(o => o.name.toLowerCase() === 'size');
     if (!sizeOption) return;
 
-    // Clear old size list
     this.sizeOptionsList.innerHTML = '';
     this.sizeSelectedText.textContent = 'Choose your size';
     this.selectedSize = null;
 
-    sizeOption.values.forEach(size => {
+    sizeOption.values.forEach((size) => {
       const li = document.createElement('li');
       li.className = 'size-option';
       li.textContent = size;
       this.sizeOptionsList.appendChild(li);
     });
+
+    // If only one size, select it automatically
+    if (sizeOption.values.length === 1) {
+      const singleSize = sizeOption.values[0];
+      this.sizeSelectedText.textContent = singleSize;
+      this.selectedSize = singleSize;
+
+      // Highlight the only size option
+      const onlySizeLi = this.sizeOptionsList.querySelector('li.size-option');
+      if (onlySizeLi) onlySizeLi.classList.add('selected');
+    }
+  }
+
+  showError(message) {
+    if (this.errorMessage) {
+      this.errorMessage.textContent = message;
+      this.errorMessage.style.display = 'block';
+    } else {
+      alert(message);
+    }
+  }
+
+  clearError() {
+    if (this.errorMessage) {
+      this.errorMessage.textContent = '';
+      this.errorMessage.style.display = 'none';
+    }
   }
 }
 

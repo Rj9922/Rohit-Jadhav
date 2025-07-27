@@ -3931,3 +3931,12 @@ span.size-selected-text {
 .variant-option.size {
   margin-bottom: 51px;
 }
+
+#popup-add-to-cart:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
