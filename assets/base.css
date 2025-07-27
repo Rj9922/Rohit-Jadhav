@@ -3765,10 +3765,169 @@ p#popup-description p {
 #popup-add-to-cart {
   width: 100%;
   padding: 12px 0;
-  background-color: #000000;
-  color:#fff;
+  background-color: #000;
+  color: #fff;
   border: none;
   font-size: 16px;
+  line-height: 20.48px;
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  transition: background-color .25s ease;
+  position: relative;
+}
+
+span.atc-text {
+  margin-right: 15px;
+}
+
+/* add-to-cart */
+span.right-icon {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+}
+
+/* color swatch animation done */
+.swatch-tabs {
+  display: flex;
+  position: relative;
+  border: 0.5px solid #000;
+  overflow: hidden;
+}
+
+.swatch-tabs .swatch-btn {
+  flex: 1;
+  padding: 10px;
+  background: white;
+  border: none;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.swatch-tabs .swatch-btn:not(:last-child) {
+  border-right: 0.5px solid #000;
+}
+
+.swatch-tabs .swatch-btn.active {
+  color: #fff;
+  background: #000000;
+}
+
+.swatch-tabs .swatch-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: black;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 0;
+}
+
+.variant-option label {
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0;
+  color: #333333;
+}
+
+button.swatch-btn::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  z-index: 1;
+  border-right: 0.5px solid #000;
+  background-color: var(--swatch-color, #ccc);
+}
+
+/* Custom size dropdown */
+.size-dropdown {
+  position: relative;
+  margin-top: 10px;
+  border: 1px solid #000;
+  font-size: 14px;
+}
+
+.size-select-toggle {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background: #fff;
+  align-items: center;
+  padding: 0;
+}
+
+span.size-selected-text {
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.32px;
+  font-weight: 400;
+  color: #000000;
+  padding: 10px 10px 13px;
+}
+
+.size-select-arrow {
+  transition: transform 0.3s ease;
+  border-left: 0.5px solid #000000;
+  padding: 10px 20px;
+}
+
+.size-select-arrow svg {
+   transition: transform 0.3s ease;
+}
+
+.size-select-arrow.rotated svg {
+  transform: rotate(180deg);
+}
+
+.size-options-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  border: 1px solid #000;
+  display: none;
+  z-index: 100;
+  max-height: 100px;
+  overflow-y: auto;
+  list-style: none; 
+  padding: 0;        
+  margin: 0; 
+}
+
+.size-options-list.open {
+  display: block;
+}
+
+.size-option {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: center;
+  color: #000000;
+  letter-spacing: -0.32px;
+  transition: hover 0.3s ease;
+}
+
+.size-option:hover {
+  background: #000;
+  color: #fff;
+}
+
+.variant-option.color {
+  margin-bottom: 11px;
+}
+
+.variant-option.size {
+  margin-bottom: 51px;
 }
