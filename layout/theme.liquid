@@ -327,11 +327,16 @@
     </main>
 
     {% sections 'footer-group' %}
+    {% render 'quick-product-view' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
+
+    <script>
+      window.money_format = "{{ shop.money_format | escape }}";
+    </script>
 
     <script>
       window.shopUrl = '{{ request.origin }}';
@@ -385,5 +390,7 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <script src="{{ 'quick-view-poup.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

@@ -1,0 +1,35 @@
+<product-popup>
+  <div class="popup" role="dialog" aria-modal="true">
+    <div class="popup-content">
+      <span class="close-popup" aria-label="Close popup">
+        {%- render 'icon-close' -%}
+      </span>
+
+      <div class="product-main-info">
+        <img id="popup-image" alt="Product image" />
+        <div class="product-details">
+          <h2 id="popup-title"></h2>
+          <p id="popup-price"></p>
+          <p id="popup-description"></p>
+        </div>
+      </div>
+
+      <!-- Variants: color and size -->
+      <div class="variant-swatch-group color">
+        <label>Color</label>
+        <div class="swatches">
+          <!-- dynamically rendered color swatches buttons -->
+        </div>
+      </div>
+
+      <div class="variant-swatch-group size">
+        <label>Size</label>
+        <div class="swatches">
+          <!-- dynamically rendered size swatches buttons -->
+        </div>
+      </div>
+
+      <button id="popup-add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+</product-popup>
