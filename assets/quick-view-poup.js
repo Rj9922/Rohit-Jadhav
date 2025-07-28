@@ -12,14 +12,18 @@ class ProductPopup extends HTMLElement {
     this.addToCartBtn = this.querySelector('#popup-add-to-cart');
     this.errorMessage = this.querySelector('#popup-error-message');
 
-    // Close button
+    // Close popup
     const closeBtn = this.querySelector('.close-popup');
     closeBtn?.addEventListener('click', () => {
       this.popup.classList.remove('show');
       this.clearError();
     });
 
-    // Add to Cart button click handler
+    // Get addon variant ID passed via Liquid
+    const productGridSection = document.querySelector(".js-product-grid");
+    this.addonProductVariantId = productGridSection?.getAttribute('data-freebie-product-id');
+
+    // Add to Cart
     this.addToCartBtn?.addEventListener('click', () => {
       this.clearError();
       const variantId = this.getSelectedVariantId();
@@ -40,34 +44,44 @@ class ProductPopup extends HTMLElement {
         return;
       }
 
+      // Default payload with main product
+      const itemsToAdd = [{ id: variantId, quantity: 1 }];
+
+      // Conditionally add freebie
+      const isFreebieEligible = this.selectedColor === 'Black' && this.selectedSize === 'Medium';
+
+      if (isFreebieEligible && this.addonProductVariantId) {
+        itemsToAdd.push({ id: this.addonProductVariantId, quantity: 1 });
+      }
+
       fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: variantId, quantity: 1 })
+        body: JSON.stringify(itemsToAdd.length === 1 ? itemsToAdd[0] : { items: itemsToAdd })
       })
         .then(res => res.json())
         .then(() => {
-          alert('Added to cart!');
+          alert(isFreebieEligible
+            ? 'Main product and freebie added to cart!'
+            : 'Product added to cart!');
           this.popup.classList.remove('show');
           window.location.href = '/cart';
         })
         .catch(() => alert('Failed to add to cart.'));
     });
 
-    // Size dropdown elements
+    // Size dropdown setup
     this.sizeDropdown = this.querySelector('.size-dropdown');
     this.sizeSelectToggle = this.querySelector('.size-select-toggle');
     this.sizeSelectedText = this.querySelector('.size-selected-text');
     this.sizeOptionsList = this.querySelector('.size-options-list');
 
-    // Toggle dropdown open/close
     this.sizeSelectToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       this.sizeOptionsList.classList.toggle('open');
       this.sizeSelectToggle.querySelector('.size-select-arrow').classList.toggle('rotated');
     });
 
-    // Update selected size text on option click + visual highlight
     this.sizeOptionsList.addEventListener('click', (event) => {
       if (event.target.classList.contains('size-option')) {
         this.sizeSelectedText.textContent = event.target.textContent;
@@ -83,7 +97,6 @@ class ProductPopup extends HTMLElement {
       }
     });
 
-    // Close dropdown if clicking outside
     document.addEventListener('click', (event) => {
       if (this.sizeDropdown && !this.sizeDropdown.contains(event.target)) {
         this.sizeOptionsList.classList.remove('open');
@@ -91,7 +104,7 @@ class ProductPopup extends HTMLElement {
       }
     });
 
-    // Color option click handler clears errors
+    // Clear error on color swatch click
     const colorContainer = this.querySelector('#color-swatch-container');
     colorContainer?.addEventListener('click', () => {
       this.clearError();
@@ -124,7 +137,7 @@ class ProductPopup extends HTMLElement {
 
     if (!color || !size) return null;
 
-    // Assumes option1 = size, option2 = color; adjust if needed
+    // Assumes option1 = size, option2 = color
     const matched = this.product.variants.find(v => v.option1 === size && v.option2 === color);
 
     return matched?.id || null;
@@ -139,7 +152,7 @@ class ProductPopup extends HTMLElement {
 
     colorContainer.innerHTML = '';
 
-    colorOption.values.forEach((color, index) => {
+    colorOption.values.forEach((color) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'swatch-btn';
@@ -173,13 +186,11 @@ class ProductPopup extends HTMLElement {
       this.sizeOptionsList.appendChild(li);
     });
 
-    // If only one size, select it automatically
     if (sizeOption.values.length === 1) {
       const singleSize = sizeOption.values[0];
       this.sizeSelectedText.textContent = singleSize;
       this.selectedSize = singleSize;
 
-      // Highlight the only size option
       const onlySizeLi = this.sizeOptionsList.querySelector('li.size-option');
       if (onlySizeLi) onlySizeLi.classList.add('selected');
     }

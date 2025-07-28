@@ -25,6 +25,10 @@
   }
 {%- endstyle -%}
 
+{%- assign addon_product_id = section.settings.additional_product.selected_or_first_available_variant.id -%}
+
+{{ addon_product_id }}
+
 <div class="section-wrapper page-width section-{{ section.id }}-padding">
   <div class="section-title">
     {%- if section.settings.heading != '' -%}
@@ -34,7 +38,7 @@
     {%- endif -%}
   </div>
 
-  <div class="product-grid-wrapper">
+  <div class="product-grid-wrapper js-product-grid" data-freebie-product-id="{{ addon_product_id }}">
     {%- if section.blocks.size > 0 -%}
       <div class="product-grid-container d-flex flex-wrap flex-gap lg-col-3 md-col-2">
         {%- for block in section.blocks -%}
@@ -121,6 +125,16 @@
           "label": "Square (1:1)"
         }
       ]
+    },
+    {
+      "type": "header",
+      "content": "Additional Product Settings",
+      "info": "Please select the product which you want to ATC when variant options Black and Medium"
+    },
+    {
+      "type": "product",
+      "id": "additional_product",
+      "label": "Choose product"
     }
   ],
   "blocks": [

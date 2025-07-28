@@ -39,34 +39,6 @@
         "show_text_below": false
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
-    },
     "product_hotspot_section_4EUL6j": {
       "type": "product-hotspot-section",
       "blocks": {
@@ -132,13 +104,13 @@
         "heading": "Tisso vison in the wild",
         "padding_top": 40,
         "padding_bottom": 40,
-        "image_ratio": "square"
+        "image_ratio": "square",
+        "additional_product": "dark-winter-jacket"
       }
     }
   },
   "order": [
     "image_banner",
-    "featured_collection",
     "product_hotspot_section_4EUL6j"
   ]
 }
