@@ -1,0 +1,143 @@
+{{ 'custom-image-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="mobile-content">
+  {%- if section.settings.title != '' -%}
+    <h1 class="custom-banner__title">
+      {{ section.settings.title }}
+    </h1>
+  {%- endif -%}
+  {%- if section.settings.subtitle != '' -%}
+    <p class="custom-banner__subtitle">
+      {{ section.settings.mobile_subtitle }}
+    </p>
+  {%- endif -%}
+</div>
+
+<div class="custom-banner custom-media custom-portrate">
+  {%- if section.settings.desktop_image != '' -%}
+    {% render 'responsive-picture',
+      class: 'custom-banner__image',
+      desktopImage: section.settings.desktop_image,
+      mobileImage: section.settings.mobile_image,
+      desktopSize: '100vw',
+      mobileSize: '50vw',
+      loading: false
+    %}
+  {%- endif -%}
+
+  <div class="custom-banner__content">
+    {%- if section.settings.title != '' -%}
+      <h1 class="custom-banner__title mobile-hidden">
+        {{ section.settings.title }}
+      </h1>
+    {%- endif -%}
+    {%- if section.settings.subtitle != '' -%}
+      <p class="custom-banner__subtitle mobile-hidden">
+        {{ section.settings.subtitle }}
+      </p>
+    {%- endif -%}
+    {%- if section.settings.button_label != '' and section.settings.button_link != '' -%}
+      <a href="{{ section.settings.button_link }}" class="custom-banner__button">
+        <span class="button-text">
+          {{ section.settings.button_label }}
+        </span>
+
+        <span class="button-right-icon">
+          {%- render 'icons-right' -%}
+        </span>
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.footer_text != '' and section.settings.footer_mobile_text -%}
+  <div class="custom-banner-footer__wrapper">
+    <p class="footer-text mobile-hidden">
+      {{ section.settings.footer_text }}
+    </p>
+    <p class="footer-text mobile-content">
+      {{ section.settings.footer_mobile_text }}
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Custom Banner",
+  "tag": "section",
+  "class": "custom-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Settings",
+      "info": "Please select the banner images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "header",
+      "content": "Text Settings",
+      "info": "Please insert the overlay text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Banner Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Your subtitle goes here"
+    },
+    {
+      "type": "text",
+      "id": "mobile_subtitle",
+      "label": "Mobile Subtitle",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "footer_mobile_text",
+      "label": "Footer Mobile Text",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Click Here"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Banner",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

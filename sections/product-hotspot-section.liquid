@@ -1,0 +1,180 @@
+{{ 'product-hotspot.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .product-card-image-container {
+    position: relative;
+    overflow: hidden;
+
+    {% if section.settings.image_ratio == 'square' %}
+      aspect-ratio: 1 / 1;
+    {% else %}
+      aspect-ratio: 4 / 5;
+    {% endif %}
+  }
+{%- endstyle -%}
+
+{%- assign addon_product_id = section.settings.additional_product.selected_or_first_available_variant.id -%}
+
+<div class="section-wrapper page-width section-{{ section.id }}-padding">
+  <div class="section-title">
+    {%- if section.settings.heading != '' -%}
+      <h2 class="section-heading h2 lustria-regular">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+  </div>
+
+  <div class="product-grid-wrapper js-product-grid" data-freebie-product-id="{{ addon_product_id }}">
+    {%- if section.blocks.size > 0 -%}
+      <div class="product-grid-container d-flex flex-wrap flex-gap lg-col-3 md-col-2">
+        {%- for block in section.blocks -%}
+          {% assign product = block.settings.product %}
+
+          {%- if product -%}
+            <div class="product-card flex-item">
+              <div class="product-card-media">
+                <div class="product-card-image-container">
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.title | escape }}"
+                    class="product-card-image"
+                    height="400"
+                    width="400"
+                    loading="lazy"
+                  >
+                  <button
+                    class="hotspot-button"
+                    style="top: {{ block.settings.hotspot_top }}%; left: {{ block.settings.hotspot_left }}%;"
+                    data-product-url="{{ product.url }}"
+                  >
+                    {% render 'icon-plus' %}
+                  </button>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'hotspot-section.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Product hotspot section",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Section padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Section padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image aspect ratio",
+      "default": "rectangle",
+      "options": [
+        {
+          "value": "rectangle",
+          "label": "Rectangle (4:5)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Additional Product Settings",
+      "info": "Please select the product which you want to ATC when variant options Black and Medium"
+    },
+    {
+      "type": "product",
+      "id": "additional_product",
+      "label": "Choose product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product hotspot",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Choose product"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_top",
+          "label": "Hotspot top position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "hotspot_left",
+          "label": "Hotspot left position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product hotspot section",
+      "blocks": [
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

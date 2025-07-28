@@ -1330,3 +1330,12 @@ class CartPerformance {
     );
   }
 }
+
+// 🌐 Global Shopify-style money formatter
+window.formatMoney = function(cents, format = window.money_format || "${{amount}}") {
+  if (typeof cents === "string") cents = cents.replace('.', '');
+
+  const value = (parseInt(cents, 10) / 100).toFixed(2);
+
+  return format.replace("{{amount}}", value);
+};

@@ -1,0 +1,50 @@
+<product-popup>
+  <div class="popup" role="dialog" aria-modal="true">
+    <div class="popup-content">
+      <span class="close-popup" aria-label="Close popup">
+        {% render 'icon-close' %}
+      </span>
+
+      <div class="product-main-info">
+        <img id="popup-image" alt="Product image" />
+        <div class="product-details">
+          <h2 id="popup-title"></h2>
+          <p id="popup-price"></p>
+          <p id="popup-description" class="clamp-4"></p>
+        </div>
+      </div>
+
+      <!-- Color Swatches -->
+      <div class="variant-option color">
+        <label>Color</label>
+        <div class="swatch-tabs" id="color-swatch-container"></div>
+      </div>
+
+      <!-- Size Dropdown -->
+      <div class="variant-option size">
+        <label>Size</label>
+        <div class="size-dropdown">
+          <div class="size-select-toggle">
+            <span class="size-selected-text">Choose your size</span>
+            <span class="size-select-arrow">
+              {% render 'icon-down-chevron' %}
+            </span>
+          </div>
+          <ul class="size-options-list"></ul>
+        </div>
+      </div>
+
+			<div id="popup-error-message" style="color: red; margin-top: 8px; display: none; text-align: center;"></div>
+
+      <button id="popup-add-to-cart">
+				<span class="atc-text">
+					Add to Cart
+				</span>
+
+				<span class="right-icon">
+					{%- render 'icons-right' -%}
+				</span>
+			</button>
+    </div>
+  </div>
+</product-popup>

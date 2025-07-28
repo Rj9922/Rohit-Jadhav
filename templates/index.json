@@ -1,75 +1,89 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "custom_image_banner_CGmkcw": {
+      "type": "custom-image-banner",
+      "name": "Custom Image Banner",
+      "settings": {
+        "desktop_image": "shopify:\/\/shop_images\/Group_1000008197.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/Frame.jpg",
+        "title": "The Gift Guide",
+        "subtitle": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "button_label": "Shop Now",
+        "button_link": "shopify:\/\/collections"
+      }
+    },
+    "product_hotspot_section_4EUL6j": {
+      "type": "product-hotspot-section",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "product_megQXy": {
+          "type": "product",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "product": "black-leather-bag",
+            "hotspot_top": 50,
+            "hotspot_left": 50
           }
         },
-        "button": {
-          "type": "buttons",
+        "product_4VEbbL": {
+          "type": "product",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "product": "blue-silk-tuxedo",
+            "hotspot_top": 50,
+            "hotspot_left": 50
+          }
+        },
+        "product_Uetieg": {
+          "type": "product",
+          "settings": {
+            "product": "chequered-red-shirt",
+            "hotspot_top": 50,
+            "hotspot_left": 50
+          }
+        },
+        "product_xTEW9K": {
+          "type": "product",
+          "settings": {
+            "product": "classic-leather-jacket",
+            "hotspot_top": 50,
+            "hotspot_left": 50
+          }
+        },
+        "product_yk6zcm": {
+          "type": "product",
+          "settings": {
+            "product": "classic-varsity-top",
+            "hotspot_top": 50,
+            "hotspot_left": 50
+          }
+        },
+        "product_r8HJ9L": {
+          "type": "product",
+          "settings": {
+            "product": "dark-denim-top",
+            "hotspot_top": 50,
+            "hotspot_left": 50
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "product_megQXy",
+        "product_4VEbbL",
+        "product_Uetieg",
+        "product_xTEW9K",
+        "product_yk6zcm",
+        "product_r8HJ9L"
       ],
+      "name": "Product hotspot section",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "heading": "Tisso vison in the wild",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "image_ratio": "square",
+        "additional_product": "dark-winter-jacket"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "custom_image_banner_CGmkcw",
+    "product_hotspot_section_4EUL6j"
   ]
 }
