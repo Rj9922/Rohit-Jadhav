@@ -16,6 +16,7 @@ class ProductPopup extends HTMLElement {
     const closeBtn = this.querySelector('.close-popup');
     closeBtn?.addEventListener('click', () => {
       this.popup.classList.remove('show');
+      document.body.classList.remove('overflow-hidden');
       this.clearError();
     });
 
@@ -48,7 +49,7 @@ class ProductPopup extends HTMLElement {
       const itemsToAdd = [{ id: variantId, quantity: 1 }];
 
       // Conditionally add freebie
-      const isFreebieEligible = this.selectedColor === 'Black' && this.selectedSize === 'Medium';
+      const isFreebieEligible = this.selectedColor === 'Black' && this.selectedSize === 'M';
 
       if (isFreebieEligible && this.addonProductVariantId) {
         itemsToAdd.push({ id: this.addonProductVariantId, quantity: 1 });
@@ -65,6 +66,7 @@ class ProductPopup extends HTMLElement {
             ? 'Main product and freebie added to cart!'
             : 'Product added to cart!');
           this.popup.classList.remove('show');
+          document.body.classList.remove('overflow-hidden');
           window.location.href = '/cart';
         })
         .catch(() => alert('Failed to add to cart.'));
@@ -126,6 +128,7 @@ class ProductPopup extends HTMLElement {
         this.buildSizeOptions(product.options);
 
         this.popup.classList.add('show');
+        document.body.classList.add('overflow-hidden');
         this.clearError();
       })
       .catch(() => alert('Could not load product. Please try again.'));

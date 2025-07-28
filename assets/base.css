@@ -3717,6 +3717,8 @@ details-disclosure > details {
 
 p#popup-description p {
   margin: 0;
+  color: #000;
+  font-weight: 300;
 }
 
 /* Variant swatches container */
