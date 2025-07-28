@@ -1,0 +1,99 @@
+{{ 'custom-header.css' | asset_url | stylesheet_tag }}
+
+<header class="custom-header">
+  <div class="custom-header__wrapper">
+    {% if section.settings.logo %}
+      <div class="custom-header__logo">
+        <a href="{{ routes.root_url }}">
+          <img src="{{ section.settings.logo | img_url: '200x' }}" width="150" height="20" loading="eager" alt="Logo">
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="custom-header__center">
+      <p>{{ section.settings.center_text }}</p>
+    </div>
+
+    <div class="custom-header__cta">
+      {% if section.settings.cta_label %}
+        <a href="{{ section.settings.cta_link }}" class="header-cta-button">
+					<span class="button-text">
+						{{ section.settings.cta_label }}
+					</span>
+					<span class="button-right-icon">
+						{%- render 'icons-right' -%}
+					</span>
+        </a>
+      {% endif %}
+    </div>
+
+    <button class="hamburger" aria-label="Toggle Menu">
+			<div class="hamburger-icon">
+				{% render 'icon-hamburger' %}
+			</div>
+			<div class="hamburger-close-icon hidden">
+				{% render 'icon-close' %}
+			</div>
+		</button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div class="mobile-dropdown">
+    <div class="mobile-custom-header__center">
+      <p>{{ section.settings.center_text }}</p>
+    </div>
+
+    <div class="mobile-custom-header__cta">
+      {% if section.settings.cta_label %}
+        <a href="{{ section.settings.cta_link }}" class="header-cta-button">
+					<span class="button-text">
+						{{ section.settings.cta_label }}
+					</span>
+					<span class="button-right-icon">
+						{%- render 'icons-right' -%}
+					</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Custom Header",
+  "tag": "section",
+  "class": "custom-header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "center_text",
+      "label": "Center Text",
+      "default": "Welcome to Our Store"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Header",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
